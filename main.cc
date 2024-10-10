@@ -45,7 +45,7 @@ int main(void) {
     int option = 0;
     while (option != 4) {
         std::cout << "1. Ordenar salarios\n";
-        std::cout << "3. Salir\n";
+        std::cout << "2. Salir\n";
         std::cout << "Opcion: ";
         std::cin >> option;
 
@@ -58,7 +58,6 @@ int main(void) {
             break;
         default:
             std::cout << "Opcion invalida" << std::endl;
-            break;
         }
     }
 
