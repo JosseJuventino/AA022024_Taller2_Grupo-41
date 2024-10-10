@@ -24,12 +24,9 @@ void Heapify(int arr[], int i, int n){
 
         Heapify(arr, max, n);
     }
-    
-
 }
 
 void BuildMaxHeap(int arr[], int n){
-
     for(int i = n / 2 - 1; i >= 0; i--){  // n/2 to 0
         Heapify(arr, i, n);
     }

@@ -17,7 +17,9 @@ int size = 0;
 */
 
 int Parent(int i) { return (i - 1) / 2; } //O(1)
-
+bool IsHeapFull() {return size == MAX_SIZE_HEAP; } //O(1)
+int LeftChild(int i) { return 2 * i + 1; } //O(1)
+int RightChild(int i) { return 2 * i + 2; } //O(1)
 
 /*
  @Function DisplayHeap: Display the content of the heap
@@ -28,7 +30,6 @@ void DisplayHeap() {
         std::cout << heap[i] << "\n"; 
 }
 
-
 /*
     @Function SiftUp: Sift up the data in the heap (Bubble up)
     @param data: Data to be sifted up
@@ -36,6 +37,7 @@ void DisplayHeap() {
     Move the element up the heap until the heap property is satisfied, that is when the parent is greater 
     than the child
 */
+
 void SiftUp(int data, int i){
     if (i == 0) {
         heap[0] = data;
@@ -44,7 +46,7 @@ void SiftUp(int data, int i){
 
     int parent = Parent(i);
 
-    if (heap[parent] < data)
+    if (heap[parent] > data)
     {  
         heap[i] = heap[parent];
         SiftUp(data, parent); //2n/3 
@@ -62,7 +64,7 @@ void SiftUp(int data, int i){
 */
 void InsertData(int data){
     heap[size] = data;
-    SiftUp(data, size);
+    SiftUp(data, size); //O(log n)
     size++;
 }
 
@@ -86,19 +88,112 @@ void LoadDataFromFile(const char* filename){
     {
         InsertData(number);
 
-        if (size == MAX_SIZE_HEAP)
-        {
+        if(IsHeapFull()){
             std::cerr << "Sorry: Heap is full" << std::endl;
             break;
-        }    
+        }
     }
 
     std::cout << "Data loaded from file " << filename << "." << std::endl;
     file.close();
 }
 
+/*
+    @Function InsertNewData: Insert new data into the heap
+    Ask the user for a new data and insert it into the heap
+*/
+
+void InsertNewData(){
+    if(IsHeapFull()){
+        std::cerr << "Sorry: Heap is full" << std::endl;
+        return;
+    }else{
+        int data;
+        std::cout << "Enter new data: ";
+        std::cin >> data;
+        InsertData(data);
+    }
+}
+
+
+/*
+    @Function HeapifyDown: Heapify the heap from the root
+    @param i: Index of the root
+    @param _size: Size of the heap
+    Heapify the heap from the root to the end of the heap
+*/
+void HeapifyDown(int i, int _size){
+    int left = LeftChild(i);
+    int right = RightChild(i);
+    int current_min = i;
+
+    if(left < _size && heap[left] < heap[current_min]){
+        current_min = left;
+    }
+
+    if(right < _size && heap[right] < heap[current_min]){
+        current_min = right;
+    }
+
+    if(current_min != i){
+        int temp = heap[i];
+        heap[i] = heap[current_min];
+        heap[current_min] = temp;
+
+        HeapifyDown(current_min, _size);
+    }
+}
+
+/*
+    @Function HeapSort: Sort the heap
+    Sort the heap using the heap sort algorithm
+*/
+
+void HeapSort(){
+
+    for (int i = size - 1; i >= 0; i--)
+    {
+        int temp = heap[0];
+        heap[0] = heap[i];
+        heap[i] = temp;
+
+        //0 is the root of the heap
+        //i is the size of the heap (decreasing)
+        HeapifyDown(0, i);
+    }
+}
+
 int main(void){
     LoadDataFromFile("prueba.txt");
-    DisplayHeap();
+    int option = 0;
+    while (option != 4)
+    {
+        std::cout << "1. Insert new salary" << std::endl;
+        std::cout << "2. Show salary" << std::endl;
+        std::cout << "3. Sort salary" << std::endl;
+        std::cout << "4. Salir" << std::endl;
+        std::cout << "Opcion: ";
+        std::cin >> option;
+
+        switch (option)
+        {
+        case 1:
+            InsertNewData();
+            break;
+        case 2:
+            DisplayHeap();
+            break;
+        case 3:
+            HeapSort();
+            break;
+        case 4:
+            std::cout << "Saliendo..." << std::endl;
+            break;
+        default:
+            std::cout << "Opcion invalida" << std::endl;
+            break;
+        }
+    }
+
     return 0;
 }
