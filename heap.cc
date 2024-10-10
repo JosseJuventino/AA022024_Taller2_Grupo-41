@@ -3,7 +3,6 @@
 int heap[MAX_SIZE_HEAP]; 
 int size = 0;   
 
-
 /**
  * @Function Parent: Return the parent of a node
  * @Function LeftChild: Return the left child of a node
@@ -99,7 +98,7 @@ void HeapifyDown(int i, int _size){
 
 int RemoveMin(){
     if (IsHeapEmpty()) {
-        std::cerr << "Heap is empty" << std::endl;
+        std::cout << "Heap is empty.\n";
         return -1;
     }
 
@@ -118,7 +117,7 @@ int RemoveMin(){
  */
 
 void DisplayHeap(int arr[]){
-    std::cout << "Contenido del heap:" << std::endl;
+    std::cout << "Contenido del heap:\n";
     for (int i = 0; i < size; i++) 
         std::cout << arr[i] << "\n"; 
 }
