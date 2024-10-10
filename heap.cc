@@ -1,7 +1,8 @@
 #include "heap.h"
 
-int heap[MAX_SIZE_HEAP]; 
+float heap[MAX_SIZE_HEAP]; 
 int size = 0;   
+
 
 /**
  * @Function Parent: Return the parent of a node
@@ -23,7 +24,7 @@ bool IsHeapEmpty() { return size == 0; }
     Move the element up the heap until the heap property is satisfied, that is when the parent is greater 
     than the child
 */
-void SiftDown(int data, int i){
+void SiftDown(float data, int i){
     if (i == 0) {
         heap[0] = data;
         return;
@@ -71,7 +72,7 @@ int SearchLargestElement(int i, int _size){
     @param data: Data to be inserted
     Insert data into the heap and increase the size of the heap
 */
-void InsertData(int data){
+void InsertData(float data){
     heap[size] = data; 
     SiftDown(data, size); //O(log n)
     size++;
@@ -82,7 +83,7 @@ void HeapifyDown(int i, int _size){
     int current_max = SearchLargestElement(i, _size);
 
     if(current_max != i){
-        int temp = heap[i];
+        float temp = heap[i];
         heap[i] = heap[current_max];
         heap[current_max] = temp;
 
@@ -96,13 +97,13 @@ void HeapifyDown(int i, int _size){
  * @return: The minimum value of the heap
 */
 
-int RemoveMin(){
+float RemoveMin(){
     if (IsHeapEmpty()) {
-        std::cout << "Heap is empty.\n";
+        std::cerr << "Heap is empty" << std::endl;
         return -1;
     }
 
-    int minValue = heap[0]; 
+    float minValue = heap[0]; 
     heap[0] = heap[size - 1];
     size--;
     HeapifyDown(0, size); //min para 
@@ -116,9 +117,9 @@ int RemoveMin(){
  * Display the content of the heap
  */
 
-void DisplayHeap(int arr[]){
-    std::cout << "Contenido del heap:\n";
+void DisplayHeap(){
+    std::cout << "Contenido del heap:" << std::endl;
     for (int i = 0; i < size; i++) 
-        std::cout << arr[i] << "\n"; 
+        std::cout << heap[i] << "\n"; 
 }
 

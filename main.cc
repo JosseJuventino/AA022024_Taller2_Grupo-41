@@ -9,7 +9,7 @@ void LoadDataFromFile(const char* filename) {
         return;
     }
 
-    int number;
+    float number;
     while (file >> number) {
         InsertData(number);
 
@@ -24,7 +24,7 @@ void LoadDataFromFile(const char* filename) {
 }
 
 void HeapSort(){
-    int sort_salaries[MAX_SIZE_HEAP];
+    float sort_salaries[MAX_SIZE_HEAP];
     int original_size = size;
 
     // Copy the heap into an array, searching for the minimum value, and removing it to put it in the array

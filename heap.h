@@ -7,7 +7,7 @@
 
 // @ var heap: Array that represents the heap
 // @ var size: Actual size of the heap
-extern int heap[MAX_SIZE_HEAP];
+extern float heap[MAX_SIZE_HEAP];
 extern int size;
 
 
@@ -29,7 +29,7 @@ int RightChild(int i);
 bool IsHeapFull();
 bool IsHeapEmpty();
 void SiftDown(int i);
-void InsertData(int data);
-int RemoveMin();
+void InsertData(float data);
+float RemoveMin();
 
 #endif 
