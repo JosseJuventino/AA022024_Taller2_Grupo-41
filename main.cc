@@ -1,65 +1,104 @@
 #include <iostream>
+#include <fstream>
+
+#define MAX_SIZE_HEAP 1000
+
+/*
+    @var heap: Array that represents the heap
+    @var size: Actual size of the heap  
+*/
+
+int heap[MAX_SIZE_HEAP];
+int size = 0;
+
+/*
+ Auxiliar functions
+    @Function Parent: Return the parent of a node
+*/
+
+int Parent(int i) { return (i - 1) / 2; } //O(1)
 
 
-void Heapify(int arr[], int i, int n){
-    int left = 2*i + 1; // left child
-    int right = 2*i + 2; //right child
-    int max = i;
-
-    if(left < n && arr[left] > arr[max]){
-        max = left;
-    } else{
-        max = i;
-    }
-
-    if(right < n && arr[right] > arr[max]){
-        max = right;
-    }
-
-    if(max != i){
-        // Make a swap between arr[i] and arr[max]
-        int temp = arr[i];
-        arr[i] = arr[max];
-        arr[max] = temp;
-
-        Heapify(arr, max, n);
-    }
-    
-
-}
-
-void BuildMaxHeap(int arr[], int n){
-
-    for(int i = n / 2 - 1; i >= 0; i--){  // n/2 to 0
-        Heapify(arr, i, n);
-    }
+/*
+ @Function DisplayHeap: Display the content of the heap
+*/
+void DisplayHeap() {
+    std::cout << "Contenido del heap:" << std::endl;
+    for (int i = 0; i < size; i++) 
+        std::cout << heap[i] << "\n"; 
 }
 
 
+/*
+    @Function SiftUp: Sift up the data in the heap (Bubble up)
+    @param data: Data to be sifted up
+    @param i: Index of the data
+    Move the element up the heap until the heap property is satisfied, that is when the parent is greater 
+    than the child
+*/
+void SiftUp(int data, int i){
+    if (i == 0) {
+        heap[0] = data;
+        return;
+    }
 
-void HeapSort(int arr[], int n){
-    BuildMaxHeap(arr, n);
+    int parent = Parent(i);
 
-    for (int i = n - 1; i >= 1; i--)
+    if (heap[parent] < data)
+    {  
+        heap[i] = heap[parent];
+        SiftUp(data, parent); //2n/3 
+    }
+    else
+    {   
+        heap[i] = data;
+    }
+}
+
+/*
+    @Function InsertData: Insert data into the heap
+    @param data: Data to be inserted
+    Insert data into the heap and increase the size of the heap
+*/
+void InsertData(int data){
+    heap[size] = data;
+    SiftUp(data, size);
+    size++;
+}
+
+/*
+    @Function LoadDataFromFile: Load data from a file
+    @param filename: Name of the file to be loaded
+    Load data from a file and insert it into the heap
+*/
+void LoadDataFromFile(const char* filename){
+    std::ifstream file(filename);
+
+    if (!file)
     {
-        int temp = arr[0];
-        arr[0] = arr[i];
-        arr[i] = temp;
-
-        Heapify(arr, 0, i);
+        std::cerr << "Sorry: Could not open file " << filename << std::endl;
+        return;
     }
+
+    int number;
+
+    while (file >> number)
+    {
+        InsertData(number);
+
+        if (size == MAX_SIZE_HEAP)
+        {
+            std::cerr << "Sorry: Heap is full" << std::endl;
+            break;
+        }    
+    }
+
+    std::cout << "Data loaded from file " << filename << "." << std::endl;
+    file.close();
 }
 
-
-int main(){
-    int arr[] = {4, 10, 3, 5, 1};
-    int n = sizeof(arr)/sizeof(arr[0]);
-    HeapSort(arr, n);
-
-    std::cout << "Sorted array is \n";
-    for(int i = 0; i < n; i++){
-        std::cout << arr[i] << " ";
-    }
-    
+int main(void){
+    LoadDataFromFile("prueba.txt");
+    DisplayHeap();
     return 0;
 }
