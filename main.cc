@@ -30,13 +30,10 @@ void LoadDataFromFile(const char* filename) {
 void HeapSort() {
     Employee sorted_employees[MAX_SIZE_HEAP];
     int original_size = size;
-
-    for (int i = 0; i < original_size; i++) {
-        sorted_employees[i] = RemoveMin();
-    }
-
+    
     std::cout << "\nEmpleados ordenados por salario (descendente):\n";
     for (int i = 0; i < original_size; i++) {
+        sorted_employees[i] = RemoveMin();
         std::cout << sorted_employees[i].nombre <<  " - " << sorted_employees[i].salario << " - " << sorted_employees[i].cargo << "\n";
     }
 }
