@@ -2,19 +2,20 @@
 #define HEAP_H
 
 #include <iostream>
+#include "employee.h"
 
 #define MAX_SIZE_HEAP 1000
 
 // @ var heap: Array that represents the heap
 // @ var size: Actual size of the heap
-extern float heap[MAX_SIZE_HEAP];
+extern Employee heap[MAX_SIZE_HEAP];
 extern int size;
 
 
 // Auxiliar functions
 /*
     @Function Parent: Return the parent of a node
-    @Finction LeftChild: Return the left child of a node
+    @Finction LeftChild: Return the left child of a node    
     @Function RightChild: Return the right child of a node
     @Function IsHeapFull: Check if the heap is full
     @Function IsHeapEmpty: Check if the heap is empty
@@ -29,7 +30,7 @@ int RightChild(int i);
 bool IsHeapFull();
 bool IsHeapEmpty();
 void SiftDown(int i);
-void InsertData(float data);
-float RemoveMin();
+void InsertData(Employee data);  
+Employee RemoveMin(); 
 
 #endif 

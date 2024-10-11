@@ -1,5 +1,6 @@
 #include <fstream>
 #include "heap.h"
+#include "employee.h" 
 
 void LoadDataFromFile(const char* filename) {
     std::ifstream file(filename);
@@ -9,38 +10,40 @@ void LoadDataFromFile(const char* filename) {
         return;
     }
 
-    float number;
-    while (file >> number) {
-        InsertData(number);
+    Employee empleado;
+    int count = 0;  // Contador para verificar cuántos empleados se están cargando
+    while (file >> empleado.nombre >> empleado.apellido >> empleado.salario >> empleado.cargo) {
+        InsertData(empleado);
+        count++;
 
         if (IsHeapFull()) {
-            std::cout << "Error: Heap is full.\n";
+            std::cout << "Error: Heap is full after " << count << " empleados.\n";
             break;
         }
     }
 
-    std::cout << "Data loaded from file " << filename << ".\n";
+    std::cout << "Loaded " << count << " employees from file " << filename << ".\n";
     file.close();
 }
 
-void HeapSort(){
-    float sort_salaries[MAX_SIZE_HEAP];
+
+void HeapSort() {
+    Employee sorted_employees[MAX_SIZE_HEAP];
     int original_size = size;
 
-    // Copy the heap into an array, searching for the minimum value, and removing it to put it in the array
     for (int i = 0; i < original_size; i++) {
-        sort_salaries[i] = RemoveMin();
+        sorted_employees[i] = RemoveMin();
     }
 
-    std::cout << "\nSalarios ordenados (descendente):\n";
+    std::cout << "\nEmpleados ordenados por salario (descendente):\n";
     for (int i = 0; i < original_size; i++) {
-        std::cout << sort_salaries[i] << "\n";
+        std::cout << sorted_employees[i].nombre <<  " - " << sorted_employees[i].salario << " - " << sorted_employees[i].cargo << "\n";
     }
 }
 
 
 int main(void) {
-    LoadDataFromFile("prueba.txt");
+    LoadDataFromFile("usuarios.txt");
 
     int option = 0;
     while (option != 2) {

@@ -1,6 +1,7 @@
 #include "heap.h"
+#include "employee.h"
 
-float heap[MAX_SIZE_HEAP]; 
+Employee heap[MAX_SIZE_HEAP]; 
 int size = 0;   
 
 
@@ -24,7 +25,7 @@ bool IsHeapEmpty() { return size == 0; }
     Move the element up the heap until the heap property is satisfied, that is when the parent is greater 
     than the child
 */
-void SiftDown(float data, int i){
+void SiftDown(Employee data, int i) {
     if (i == 0) {
         heap[0] = data;
         return;
@@ -32,13 +33,10 @@ void SiftDown(float data, int i){
 
     int parent = Parent(i);
 
-    if (heap[parent] < data)
-    {  
+    if (heap[parent].salario < data.salario) {
         heap[i] = heap[parent];
-        SiftDown(data, parent); //2n/3 
-    }
-    else
-    {   
+        SiftDown(data, parent);
+    } else {
         heap[i] = data;
     }
 }
@@ -51,20 +49,20 @@ void SiftDown(float data, int i){
     Search the smallest element in the heap, comparing the left and right child with the current element
 */
 
-int SearchLargestElement(int i, int _size){
+int SearchLargestElement(int i, int _size) {
     int left = LeftChild(i);
     int right = RightChild(i);
-    int current_min = i;
+    int current_max = i;
 
-    if(left < _size && heap[left] > heap[current_min]){
-        current_min = left;
+    if (left < _size && heap[left].salario > heap[current_max].salario) {
+        current_max = left;
     }
 
-    if(right < _size && heap[right] > heap[current_min]){
-        current_min = right;
+    if (right < _size && heap[right].salario > heap[current_max].salario) {
+        current_max = right;
     }
 
-    return current_min;
+    return current_max;
 }
 
 /*
@@ -72,45 +70,57 @@ int SearchLargestElement(int i, int _size){
     @param data: Data to be inserted
     Insert data into the heap and increase the size of the heap
 */
-void InsertData(float data){
-    heap[size] = data; 
-    SiftDown(data, size); //O(log n)
+void InsertData(Employee data) {
+    if (IsHeapFull()) {
+        std::cerr << "Heap is full\n";
+        return;
+    }
+
+    heap[size] = data;
+    SiftDown(data, size);
     size++;
 }
 
-void HeapifyDown(int i, int _size){
- 
+/*
+    @Function HeapifyDown: Heapify the heap from the root
+    @param i: Index of the element
+    @param _size: Size of the heap
+    Heapify the heap from the root, comparing the current element with the left and right child
+*/
+
+void HeapifyDown(int i, int _size) {
     int current_max = SearchLargestElement(i, _size);
 
-    if(current_max != i){
-        float temp = heap[i];
+    if (current_max != i) {
+        Employee temp = heap[i];
         heap[i] = heap[current_max];
         heap[current_max] = temp;
 
         HeapifyDown(current_max, _size);
     }
 }
-
 /**
  * @Function RemoveMin: Remove the minimum value from the heap
  * Remove the minimum value from the heap and decrease the size of the heap
  * @return: The minimum value of the heap
 */
 
-float RemoveMin(){
+Employee RemoveMin() {
     if (IsHeapEmpty()) {
-        std::cerr << "Heap is empty" << std::endl;
-        return -1;
+        std::cerr << "Heap is empty\n";
+
+        Employee emptyEmployee;
+        emptyEmployee.salario = -1;  
+        return emptyEmployee;
     }
 
-    float minValue = heap[0]; 
+    Employee EmployeeMin = heap[0];
     heap[0] = heap[size - 1];
     size--;
-    HeapifyDown(0, size); //min para 
+    HeapifyDown(0, size);
 
-    return minValue; 
+    return EmployeeMin;  
 }
-
 
 /**
  * @Function DisplayHeap: Display the content of the heap
@@ -120,6 +130,6 @@ float RemoveMin(){
 void DisplayHeap(){
     std::cout << "Contenido del heap:" << std::endl;
     for (int i = 0; i < size; i++) 
-        std::cout << heap[i] << "\n"; 
+        std::cout << heap[i].salario << "\n"; 
 }
 
