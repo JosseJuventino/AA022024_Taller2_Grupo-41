@@ -31,7 +31,7 @@ int main(void) {
     LoadDataFromFile("usuarios.txt");
 
     int option = 0;
-    while (option != 4) {
+    while (option != 2) {
         std::cout << "\nMENU\n";
         std::cout << "1. Ordenar salarios\n";
         std::cout << "2. Salir\n";
@@ -42,10 +42,7 @@ int main(void) {
         case 1:
             OrderHeap();
             break;
-        case 3:
-            
-            break;
-        case 4:
+        case 2:
             std::cout << "Saliendo...\n";
             break;
         default:

@@ -45,6 +45,22 @@
     "ostream": "cpp",
     "stdexcept": "cpp",
     "streambuf": "cpp",
-    "typeinfo": "cpp"
+    "typeinfo": "cpp",
+    "__bit_reference": "cpp",
+    "__config": "cpp",
+    "__locale": "cpp",
+    "__threading_support": "cpp",
+    "__verbose_abort": "cpp",
+    "bitset": "cpp",
+    "complex": "cpp",
+    "cstring": "cpp",
+    "execution": "cpp",
+    "iomanip": "cpp",
+    "ios": "cpp",
+    "locale": "cpp",
+    "mutex": "cpp",
+    "ratio": "cpp",
+    "sstream": "cpp",
+    "variant": "cpp"
   }
 }
