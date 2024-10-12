@@ -36,5 +36,6 @@ void OrderHeap();
 int SearchHeapByValue(float value);
 int SearchLargestElement(int i, int _size);
 int SearchSmallestElement(int i, int _size);
+bool Remove(float value);
 
 #endif 

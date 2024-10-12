@@ -19,6 +19,25 @@ bool IsHeapFull() { return size == MAX_SIZE_HEAP; }
 bool IsHeapEmpty() { return size == 0; }
 
 /*
+    @Function HeapifyDown: Heapify the heap from the root
+    @param i: Index of the element
+    @param _size: Size of the heap
+    Heapify the heap from the root, comparing the current element with the left and right child
+*/
+
+void HeapifyDown(int i, int _size) {
+    int current_max = SearchLargestElement(i, _size);
+
+    if (current_max != i) {
+        Employee temp = heap[i];
+        heap[i] = heap[current_max];
+        heap[current_max] = temp;
+
+        HeapifyDown(current_max, _size);
+    }
+}
+
+/*
     @Function SiftDown: Sift up the data in the heap (Bubble up)
     @param data: Data to be sifted up
     @param i: Index of the data
@@ -72,16 +91,18 @@ int SearchLargestElement(int i, int _size) {
     and then heapifying the heap
 */
 
-bool Remove(float value){
-    int id = SearchHeapByValue(value); //Search the salary and delete the first occurrence
-    if(id == -1){
+bool RemovebyId(int id) {
+    if (IsHeapEmpty()) {
+        std::cerr << "Heap is empty\n";
         return false;
-    }else{
-        heap[id] = heap[--size];
-        HeapifyDown(id, size);
-        return true;
     }
-    
+
+    heap[id] = heap[size - 1];
+    size--;
+
+    HeapifyDown(id, size);
+
+    return true;
 }
 
 /*
@@ -124,24 +145,7 @@ void InsertData(Employee data) {
     size++;
 }
 
-/*
-    @Function HeapifyDown: Heapify the heap from the root
-    @param i: Index of the element
-    @param _size: Size of the heap
-    Heapify the heap from the root, comparing the current element with the left and right child
-*/
 
-void HeapifyDown(int i, int _size) {
-    int current_max = SearchLargestElement(i, _size);
-
-    if (current_max != i) {
-        Employee temp = heap[i];
-        heap[i] = heap[current_max];
-        heap[current_max] = temp;
-
-        HeapifyDown(current_max, _size);
-    }
-}
 /**
  * @Function RemoveMin: Remove the minimum value from the heap
  * Remove the minimum value from the heap and decrease the size of the heap
@@ -158,9 +162,8 @@ Employee RemoveMin() {
     }
 
     Employee EmployeeMin = heap[0];
-    heap[0] = heap[size - 1];
-    size--;
-    HeapifyDown(0, size);
+
+    RemovebyId(0);
 
     return EmployeeMin;  
 }
