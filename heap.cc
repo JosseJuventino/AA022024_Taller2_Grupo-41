@@ -48,7 +48,6 @@ void SiftDown(Employee data, int i) {
     @return: The index of the smallest element
     Search the smallest element in the heap, comparing the left and right child with the current element
 */
-
 int SearchLargestElement(int i, int _size) {
     int left = LeftChild(i);
     int right = RightChild(i);
@@ -63,6 +62,50 @@ int SearchLargestElement(int i, int _size) {
     }
 
     return current_max;
+}
+
+/*
+    @Function Remove: Remove an element from the heap
+    @param value: Value to be removed 
+    @return: True if the element was removed
+    Remove an element from the heap by searching for the element and replacing it with the last element of the heap
+    and then heapifying the heap
+*/
+
+bool Remove(float value){
+    int id = SearchHeapByValue(value); //Search the salary and delete the first occurrence
+    if(id == -1){
+        return false;
+    }else{
+        heap[id] = heap[--size];
+        HeapifyDown(id, size);
+        return true;
+    }
+    
+}
+
+/*
+    @Function SearchSmallestElement: Search the smallest element in the heap
+    @param i: Index of the element
+    @param _size: Size of the heap
+    @return: The index of the smallest element
+    Search the smallest element in the heap, comparing the left and right child with the current element
+*/
+
+int SearchSmallestElement(int i, int _size) {
+    int left = LeftChild(i);
+    int right = RightChild(i);
+    int current_min = i;
+
+    if (left < _size && heap[left].salario < heap[current_min].salario) {
+        current_min = left;
+    }
+
+    if (right < _size && heap[right].salario < heap[current_min].salario) {
+        current_min = right;
+    }
+
+    return current_min;
 }
 
 /*
@@ -147,13 +190,13 @@ void OrderHeap() {
     }
 }
 
-
 /*
     @Function SearchHeap: Search for an element in the heap and return its original index
     @param value: Value to search for (salary in this case)
     @return: Index of the element in the original heap, or -1 if not found
 */
-int SearchHeap(float value) {
+
+int SearchHeapByValue(float value) {
     for (int i = 0; i < size; ++i) {
         if (heap[i].salario == value) {
             return i;

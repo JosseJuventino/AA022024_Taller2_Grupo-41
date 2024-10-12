@@ -18,6 +18,7 @@ int size = 0;
 
 int Parent(int i) { return (i - 1) / 2; } //O(1)
 bool IsHeapFull() {return size == MAX_SIZE_HEAP; } //O(1)
+bool IsHeapEmpty() {return size == 0; } //O(1)
 int LeftChild(int i) { return 2 * i + 1; } //O(1)
 int RightChild(int i) { return 2 * i + 2; } //O(1)
 

@@ -33,6 +33,8 @@ void SiftDown(int i);
 void InsertData(Employee data);  
 Employee RemoveMin(); 
 void OrderHeap();
-int SearchHeap(float value);
+int SearchHeapByValue(float value);
+int SearchLargestElement(int i, int _size);
+int SearchSmallestElement(int i, int _size);
 
 #endif 

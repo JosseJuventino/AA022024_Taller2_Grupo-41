@@ -43,7 +43,7 @@ int main(void) {
             OrderHeap();
             break;
         case 3:
-            std::cout <<SearchHeap(3034.72);
+            
             break;
         case 4:
             std::cout << "Saliendo...\n";
