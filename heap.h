@@ -32,5 +32,7 @@ bool IsHeapEmpty();
 void SiftDown(int i);
 void InsertData(Employee data);  
 Employee RemoveMin(); 
+void OrderHeap();
+int SearchHeap(float value);
 
 #endif 

@@ -133,3 +133,32 @@ void DisplayHeap(){
         std::cout << heap[i].salario << "\n"; 
 }
 
+/*
+    @Function OrderHeap: Order the heap
+    Order the heap by removing the minimum value from the heap, ordering in descending order
+*/
+void OrderHeap() {
+    Employee sorted_employees[MAX_SIZE_HEAP];
+    int original_size = size;
+
+    for (int i = 0; i < original_size; i++) {
+        sorted_employees[i] = RemoveMin();
+        std::cout << sorted_employees[i].nombre <<  " - " << sorted_employees[i].salario << " - " << sorted_employees[i].cargo << "\n";
+    }
+}
+
+
+/*
+    @Function SearchHeap: Search for an element in the heap and return its original index
+    @param value: Value to search for (salary in this case)
+    @return: Index of the element in the original heap, or -1 if not found
+*/
+int SearchHeap(float value) {
+    for (int i = 0; i < size; ++i) {
+        if (heap[i].salario == value) {
+            return i;
+        }
+    }
+    return -1
+}
+
